@@ -3,21 +3,18 @@ import sys
 import os
 import traceback
 
-# Function to check and install dependencies
 def check_and_install_dependencies():
     required_packages = ["pywin32"]
 
     for package in required_packages:
         try:
-            __import__(package)  # Try to import the package
+            __import__(package)  
         except ImportError:
             print(f"Package '{package}' not found. Installing it now...")
             subprocess.check_call([sys.executable, "-m", "pip", "install", package])
 
-# Call the function to check and install dependencies
 check_and_install_dependencies()
 
-# Importing modules after ensuring they are installed
 try:
     import win32evtlog
     import win32evtlogutil
@@ -29,9 +26,9 @@ def format_custom_description(event):
     """Format the event description with custom messages for startup and shutdown events."""
     try:
         event_id = event.EventID & 0xFFFF
-        if event_id == 6005:  # System startup event
+        if event_id == 6005:  
             return "The system service started at"
-        elif event_id == 6006:  # System shutdown event
+        elif event_id == 6006:
             return "The system service was stopped at"
         else:
             return "No description available"
@@ -43,7 +40,6 @@ def write_events_to_file():
     log_type = 'System'
     flags = win32evtlog.EVENTLOG_BACKWARDS_READ | win32evtlog.EVENTLOG_SEQUENTIAL_READ
 
-    # Create a file in the same directory as the script
     script_dir = os.path.dirname(os.path.abspath(__file__))
     file_path = os.path.join(script_dir, 'system_power_events.txt')
     
@@ -63,10 +59,10 @@ def write_events_to_file():
                 
                 for event in events:
                     event_id = event.EventID & 0xFFFF
-                    if event_id in [6005, 6006]:  # 6005 = System Startup, 6006 = System Shutdown
+                    if event_id in [6005, 6006]:  
                         time_generated = event.TimeGenerated.Format() if event.TimeGenerated else "N/A"
                         custom_description = format_custom_description(event)
-                        user_account = getattr(event, 'Sid', None)  # Get the security ID if available
+                        user_account = getattr(event, 'Sid', None)  
                         user_name = win32evtlogutil.FormatMessage(event, log_type) if user_account else "N/A"
 
                         event_info = (
