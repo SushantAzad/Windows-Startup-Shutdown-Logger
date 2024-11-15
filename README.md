@@ -27,8 +27,8 @@ This script requires Python and the following modules:
 1. Clone the Repository:
 
 ```bash
-git clone https://github.com/yourusername/yourrepository.git
-cd yourrepository
+git clone https://github.com/yourusername/your_repository.git
+cd your_repository
 ```
 
 2. Run the Script:
