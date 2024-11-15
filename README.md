@@ -34,7 +34,6 @@ cd your_repository
 2. Run the Script:
 
 ```bash
-Copy code
 python startup_shutdown_logger.py
 ```
 
